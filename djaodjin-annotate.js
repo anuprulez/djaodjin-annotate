@@ -744,14 +744,17 @@ MIT License
       }
       var exportDefaults = {
         type: 'image/jpeg',
-        quality: 0.75
+        quality: 1.0
       };
       options = $.extend({}, exportDefaults, options);
-      var image = self.baseCanvas.toDataURL(options.type, options.quality);
+      var image_annotation = self.baseCanvas.toDataURL(options.type, options.quality);
+      var annotation = self.drawingCanvas.toDataURL(options.type, options.quality);
       if (callback) {
-        callback(image);
+        callback(image_annotation);
+        callback(annotation)
       }
-      self.options.onExport(image);
+      self.options.onExport(image_annotation);
+      self.options.onExport(annotation);
     }
   };
   $.fn.annotate = function(options, cmdOption, callback) {

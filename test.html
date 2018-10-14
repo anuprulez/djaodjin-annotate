@@ -20,6 +20,7 @@
 	<script type="text/javascript" src="vendor/js/jquery.min.js"></script>
 	<script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="djaodjin-annotate.js"></script>
+	<script type="text/javascript" src="download_image.js"></script>
 	<script>
 		$(document).ready(function(){
 			var counter = 0;
@@ -29,7 +30,7 @@
 			$('#myCanvas').annotate({
 				color: 'blue',
 				bootstrap: true,
-				images: ['images/test.jpg'],
+				images: ['images/Galaxy9-[Lm73.png].png'],
 				onExport: function(image){
 					if ($("#exported-image").length > 0){
 						$("#exported-image").remove();
@@ -40,18 +41,29 @@
 
 			$(".push-new-image").click(function(event) {
 				if (counter === 0){
-					$('#myCanvas').annotate("push", "images/test_2.jpg");
+					$('#myCanvas').annotate("push", "images/Galaxy9-[Lm73.png].png");
 					counter += 1;
 				}else{
-					$('#myCanvas').annotate("push", {id:"unique_identifier", path:"images/test.jpg"});
+					$('#myCanvas').annotate("push", {id:"unique_identifier", path:"images/Galaxy9-[Lm73.png].png"});
 				}
 			});
 
 			$(".export-image").click(function(event) {
-				$('#myCanvas').annotate("export", {type: "image/jpeg", quality: 0.2},function(d){
+				$('#myCanvas').annotate("export", {type: "image/jpeg", quality: 1.0},function(d){
 					console.log(d);
+					file_id = makeid() + ".jpg";
+					download(d, file_id, "image/jpeg");
 				});
 			});
+			
+			function makeid() {
+                            var text = "";
+                            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                            for (var i = 0; i < 5; i++)
+                                text += possible.charAt(Math.floor(Math.random() * possible.length));
+                            return text;
+                        }
 		});
 	</script>
 </body>
